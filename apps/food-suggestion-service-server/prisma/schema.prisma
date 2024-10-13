@@ -1,0 +1,57 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Dish {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Restaurant {
+  address   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  photos    Json?
+  rating    Float?
+  updatedAt DateTime @updatedAt
+}
+
+model Suggestion {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  createdAt           DateTime                      @default(now())
+  cuisinePreferences  EnumUserCuisinePreferences[]
+  dietaryRestrictions EnumUserDietaryRestrictions[]
+  email               String?                       @unique
+  firstName           String?
+  id                  String                        @id @default(cuid())
+  lastName            String?
+  locationRadius      Int?
+  password            String
+  priceRange          EnumUserPriceRange?
+  roles               Json
+  updatedAt           DateTime                      @updatedAt
+  username            String                        @unique
+}
+
+enum EnumUserCuisinePreferences {
+  Option1
+}
+
+enum EnumUserDietaryRestrictions {
+  Option1
+}
+
+enum EnumUserPriceRange {
+  Option1
+}
